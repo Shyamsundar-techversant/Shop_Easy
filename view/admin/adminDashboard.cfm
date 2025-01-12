@@ -12,6 +12,7 @@
     <link rel = "stylesheet" href = "../../assets/css/bootstrap.css" />
   </head>
   <body>
+
     <!-- Header -->
     <section class = "header-section">
       <header class = "header">
@@ -19,7 +20,7 @@
           <div class = "header-content">
             <div class = "brand-name">ShopEasy</div>
             <div class = "sign-buttons">
-              <button class = "reg-btn btn" onclick = "window.location.href = 'log.cfm' ">LogOut</button>
+              <button class = "reg-btn btn" onclick = "window.location.href = '../log.cfm?logOut=1' ">LogOut</button>
             </div>
           </div>
         </div>
@@ -33,7 +34,9 @@
             <div class = "cardhead-content">
               <span class = "category-head">Categories</span>
               <span>
-                <button type="button" class="category-btn" data-bs-toggle="modal" data-bs-target="#categoryAddModal">
+                <button type="button" class="category-btn" data-bs-toggle="modal" 
+                              data-bs-target="#categoryAddModal" id = "categoryButton"
+                >
                   +  
                 </button>
               </span> 
@@ -74,7 +77,7 @@
             <h5 class="modal-title" >Add Category</h5>
           </div>
           <div class="modal-body">
-            <form action = "" class = "categAddForm" method = "post">
+            <form action = "" class = "categAddForm" method = "post" id = "categoryAddForm">
               <div class = "row mb-3">
                 <div class = "col">
                   <label for = "categName" class = "form-label">Enter category Name </label>
@@ -86,18 +89,23 @@
               <div class = "row mb-3 ">
                 <div class = "col categ-add-btns">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" name = "categSubmit">Add Category</button>
+                  <button type="button" class="btn btn-primary" name = "categSubmit" id = "categAddBtn">Add Category</button>
                 </div>
-              </div>          
+              </div>  
+              <div class = "row mb-3 ">
+                <div id = "addCategError">
+
+                </div>
+              </div>  
+                      
             </form>
           </div>       
         </div>
       </div>
     </div>
 
-
-
-
-   <script src = "../../assets/js/bootstrap.bundle.js"></script>
+    <script src = "../../assets/js/bootstrap.bundle.js"></script>
+    <script src = "../../assets/js/jquery-3.7.1.min.js"></script>
+    <script src = "../../assets/js/admin.js"></script>
   </body>
 </html>

@@ -76,16 +76,4 @@
       
     </cffunction>
 
-    <cffunction  name="validateCategName" access = "public" returntype = "any">
-        <cfargument name = "categName" type = "string" required = "true">
-            <cfset local.errors = [] >
-            <cfif structKeyExists(arguments, "userName")>
-                <cfif len(trim(arguments.userName)) EQ 0>
-		            <cfset arrayAppend(local.errors,"*Enter the category name")>
-		        </cfif>
-            </cfif>
-    </cffunction>
-
-
-
 </cfcomponent>
