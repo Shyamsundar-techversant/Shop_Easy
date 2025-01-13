@@ -1,8 +1,5 @@
 <cfif structKeyExists(url, "logOut")>
-  <cfset structDelete(session, "adminName","true")>
-  <cfset structDelete(session,"adminId","true")>
-  <cfset structDelete(session, "userName","true") >
-  <cfset structDelete(session,"userId","true") >
+  <cfset structDelete(session, "roleId","true")>
 </cfif>
 <cfif structKeyExists(form, "userLogIn")>
   <cfset variables.logResult = application.userContObj.validateUserForm(
@@ -12,7 +9,6 @@
   >
 </cfif>
 
-  
 <!--- <cfset pass = "Shyam@123">
 <cfset salt = "q1Y9Ls/IoY5RUVY3oojjOQ==">
 <cfset saltPass = pass & salt>

@@ -1,8 +1,17 @@
-<cfif structKeyExists(form, "categSubmit")>
-  <cfdump var = "#form#">
-</cfif>
+<cfif structKeyExists(url,'categId')>
+    <cfset variables.getCategoryById = application.cateContObj.getCategory(
 
-<cfset variables.getCategory = application.cateContObj.getCategory()>
+                                                                            categoryId = url.categId
+
+                                                                        )
+
+    >
+    <cfset variables.getAllSubCategory = application.cateContObj.getSubCategory(
+                                                                                    categoryId = url.categId
+                                                                            )
+    >
+    <cfdump var = "#variables.getAllSubCategory#" >
+</cfif>
 
 <!DOCTYPE html>
 <html lang = "en">
@@ -21,9 +30,7 @@
         <div class = "container">
           <div class = "header-content">
             <div class = "brand-name">ShopEasy</div>
-            <div class = "sign-buttons">
-              <button class = "reg-btn btn" onclick = "window.location.href = '../log.cfm?logOut=1' ">LogOut</button>
-            </div>
+            <div></div>
           </div>
         </div>
       </header>
@@ -34,35 +41,38 @@
         <div class = "card">
           <div class = "card-head">
             <div class = "cardhead-content">
-              <span class = "category-head">Categories</span>
-              <span>
-                <button type="button" class="category-btn" data-bs-toggle="modal" 
-                              data-bs-target="#categoryAddModal" id = "categoryButton"
-                >
-                  +  
-                </button>
-              </span> 
+                <span class = "category-head">
+                    <cfoutput>#variables.getAllSubCategory.fldSubCategoryName#</cfoutput>
+                </span>
+                <span>
+                    <button type="button" class="category-btn" data-bs-toggle="modal" 
+                              data-bs-target="#subCategoryAddEditModal" id = "subCategoryButton"
+                              data-id = "<cfoutput>#url.categId#</cfoutput>"
+                    >
+                        +  
+                    </button>
+                </span> 
             </div>
           </div>
           <div class = "card-body">
             <table class="table">
               <tbody>
-                <cfif structKeyExists(variables, "getCategory")>
-                  <cfoutput query = "variables.getCategory">
+                <cfif structKeyExists(variables, "getAllSubCategory")>
+                  <cfoutput query = "variables.getAllSubCategory">
                     <cfset encryptedId = encrypt(
-                                            getCategory.fldCategory_ID,
+                                            variables.getAllSubCategory.fldSubCategory_ID,
                                             application.encryptionKey,
                                             "AES",
                                             "Hex"
                                           )
                     >
                     <tr class = "table-danger">
-                      <td>#variables.getCategory.fldCategoryName#</td>
+                      <td>#variables.getAllSubCategory.fldSubCategoryName#</td>
                       <td>
                         <button type = "button" 
-                                  class = "categ-alt-btn categoryEditBtn"
+                                  class = "categ-alt-btn subCategoryEditBtn"
                                   data-bs-toggle = "modal"
-                                  data-bs-target = "##categoryAddModal"
+                                  data-bs-target = "##subCategoryAddEditModal"
                                   data-id = "#encryptedId#"
                         >
                           EDIT
@@ -100,28 +110,28 @@
       </div>
     </section>
 
-    <!-- Category Add Edit Modal -->
-    <div class="modal fade" id="categoryAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--Sub Category Add Edit Modal -->
+    <div class="modal fade" id="subCategoryAddEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header categAddModalHead">
-            <h5 class="modal-title" id = "categTitle">Add Category</h5>
+            <h5 class="modal-title" id = "categTitle">Add SubCategory</h5>
           </div>
           <div class="modal-body">
             <form action = "" class = "categAddForm" method = "post" id = "categoryAddForm">
               <div class = "row mb-3">
                 <div class = "col">
-                  <label for = "categName" class = "form-label">Enter category Name </label>
+                  <label for = "categName" class = "form-label">Enter Subcategory Name </label>
                   <input type = "text" class = "form-control" id = "categName" name = "categName"
-                    placeholder = "Enter the category name you want to add"
+                    placeholder = "Enter the subcategory name you want to add"
                   >
                 </div>
               </div>
               <div class = "row mb-3 ">
                 <div class = "col categ-add-btns">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" name = "categSubmit" id = "categAddBtn">Add Category</button>
-                  <button type="button" class="btn btn-primary" name = "categSubmit" id = "categEditBtn">Edit Category</button>
+                  <button type="button" class="btn btn-primary" name = "categSubmit" id = "subCategAddBtn">Add SubCategory</button>
+                  <button type="button" class="btn btn-primary" name = "categSubmit" id = "subCategEditBtn">Edit SubCategory</button>
                 </div>
               </div>  
               <div class = "row mb-3 ">

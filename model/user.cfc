@@ -37,14 +37,8 @@
                 <cfset local.hashPass = hashPassword(arguments.password,local.salt)>
                 <cfif local.hashPass EQ local.userLog.fldHashedPassword>
                     <cfset local.result = "LogIn Successful" >
-                    <cfif local.userLog.fldRoleId EQ 1>
-                        <cfset session['adminName'] = arguments.userName>
-                        <cfset session['adminId'] = local.userLog.fldUser_ID>
-                    <cfelse>
-                        <cfset session['userName'] = arguments.userName> 
-                        <cfset session['userId'] = local.userLog.fldUser_ID>                 
-                    </cfif>
-                    <cfdump var = "#local.userLog#" >
+                    <cfset session['adminId'] = local.userLog.fldUser_ID >
+                    <cfset session['roleId'] = local.userLog.fldRoleId>                
                     <cflocation  url="./admin/adminDashBoard.cfm" addtoken = "false">
                 <cfelse>
                     <cfset local.result = "Invalid Data" >
